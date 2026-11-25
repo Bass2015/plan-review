@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan review</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="candle" viewBox="0 0 64 64">
+      <rect x="24" y="30" width="16" height="28" rx="2" fill="#e9dfcc" stroke="#b3a184" stroke-width="2"/>
+      <line x1="32" y1="30" x2="32" y2="24" stroke="#5a4f45" stroke-width="2"/>
+      <path d="M32 7 C39 16 39 22 32 25 C25 22 25 16 32 7Z" fill="#d39a45"/>
+      <path d="M32 14 C35 18 35 21 32 23 C29 21 29 18 32 14Z" fill="#f1d9a0"/>
+    </symbol>
+    <symbol id="fire" viewBox="0 0 64 64">
+      <path d="M32 4 C36 14 46 18 46 34 C46 46 40 56 32 58 C24 56 18 46 18 36 C18 28 22 24 24 18 C26 24 28 26 30 26 C30 18 30 10 32 4Z" fill="#b4532e"/>
+      <path d="M32 26 C36 32 40 36 40 44 C40 52 36 56 32 56 C28 56 24 52 24 46 C24 40 28 38 30 34 C31 38 32 38 33 38 C33 34 32 30 32 26Z" fill="#d68f4a"/>
+      <path d="M32 40 C35 44 36 47 36 50 C36 53 34 55 32 55 C30 55 28 53 28 50 C28 47 30 45 32 40Z" fill="#efcf93"/>
+    </symbol>
+    <symbol id="explosion" viewBox="0 0 64 64">
+      <polygon points="62,32 46.3,36.6 53,47.3 40.8,44.1 41.3,60.5 32,47 24,56.7 23.2,44.1 7.7,49.6 17.7,36.6 6,32 17.7,27.4 7.7,14.4 23.2,19.9 24,7.3 32,17 41.3,3.5 40.8,19.9 53,16.7 46.3,27.4" fill="#9a3f26"/>
+      <polygon points="62,32 46.3,36.6 53,47.3 40.8,44.1 41.3,60.5 32,47 24,56.7 23.2,44.1 7.7,49.6 17.7,36.6 6,32 17.7,27.4 7.7,14.4 23.2,19.9 24,7.3 32,17 41.3,3.5 40.8,19.9 53,16.7 46.3,27.4" fill="#cf7a3f" transform="rotate(18 32 32) translate(32 32) scale(.62) translate(-32 -32)"/>
+      <polygon points="62,32 46.3,36.6 53,47.3 40.8,44.1 41.3,60.5 32,47 24,56.7 23.2,44.1 7.7,49.6 17.7,36.6 6,32 17.7,27.4 7.7,14.4 23.2,19.9 24,7.3 32,17 41.3,3.5 40.8,19.9 53,16.7 46.3,27.4" fill="#ecc98d" transform="translate(32 32) scale(.3) translate(-32 -32)"/>
+    </symbol>
+    <symbol id="nuke" viewBox="0 0 64 64">
+      <ellipse cx="32" cy="57" rx="27" ry="5" fill="#6b4a37"/>
+      <path d="M23 57 C28 50 28 40 28 29 L36 29 C36 40 36 50 41 57Z" fill="#a8603d"/>
+      <ellipse cx="32" cy="41" rx="10" ry="3" fill="#8a4b30"/>
+      <circle cx="20" cy="22" r="9" fill="#c27443"/>
+      <circle cx="44" cy="22" r="9" fill="#c27443"/>
+      <circle cx="26" cy="13" r="8" fill="#c27443"/>
+      <circle cx="38" cy="13" r="8" fill="#c27443"/>
+      <circle cx="32" cy="18" r="12" fill="#c27443"/>
+      <ellipse cx="32" cy="29" rx="20" ry="4" fill="#8a4b30"/>
+      <circle cx="27" cy="13" r="4" fill="#e2b07d"/>
+      <circle cx="40" cy="17" r="3" fill="#e2b07d"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Plan review · <span id="round"></span></div>
+    <h1 id="title">Loading…</h1>
+  </div>
+</header>
+
+<main class="wrap" id="main">
+  <div id="warnings"></div>
+  <div id="preamble" class="md"></div>
+  <section id="context"></section>
+  <section class="tasks">
+    <div class="section-head">
+      <h2 class="eyebrow">Tasks <span id="task-count"></span></h2>
+      <div id="legend" class="legend"></div>
+    </div>
+    <div id="board" class="board"></div>
+  </section>
+  <section id="sections"></section>
+  <section id="general" class="panel">
+    <h2 class="eyebrow">Overall comments</h2>
+    <div class="threads-slot" data-target="general"></div>
+  </section>
+</main>
+
+<div id="scrim" hidden></div>
+<aside id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div>
+      <span id="d-id" class="tid"></span>
+      <h2 id="d-title"></h2>
+    </div>
+    <button id="d-close" class="link-btn" title="Close (Esc)">Close</button>
+  </div>
+  <div id="d-meta" class="d-meta"></div>
+  <div id="d-change"></div>
+  <div id="d-body" class="md"></div>
+  <h3 class="eyebrow sub">Discussion</h3>
+  <div id="d-threads" class="threads-slot"></div>
+</aside>
+
+<footer class="bar">
+  <div class="wrap bar-inner">
+    <textarea id="general-input" rows="1" placeholder="Overall feedback (optional)"></textarea>
+    <div class="bar-actions">
+      <span id="pending-summary" class="muted"></span>
+      <button id="btn-terminal" class="link-btn" title="Close this page and use Claude Code's normal approval prompt">Use terminal instead</button>
+      <button id="btn-revise" class="btn primary">Send feedback &amp; continue planning</button>
+      <button id="btn-approve" class="btn approve">Approve</button>
+    </div>
+  </div>
+</footer>
+
+<div id="done" hidden>
+  <div class="done-card">
+    <h2 id="done-icon"></h2>
+    <p id="done-title"></p>
+    <p class="muted">You can close this tab.</p>
+  </div>
+</div>
+
+<script src="vendor/purify.min.js"></script>
+<script src="vendor/marked.min.js"></script>
+<script src="vendor/mermaid.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
